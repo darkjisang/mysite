@@ -24,8 +24,11 @@ public class BoardDAO {
 	}
 	
 	public BoardVO getBoard(int no) {
-		BoardVO vo = sqlsession.selectOne("board.getBoard", no);
 		System.out.println("BoardDAO.getBoard()");
-		return vo;
+		return sqlsession.selectOne("board.getBoard", no);
+	}
+	
+	public void cntUpdate(int no) {
+		sqlsession.update("board.cntUpdate", no);
 	}
 }

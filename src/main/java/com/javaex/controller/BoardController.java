@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -38,12 +39,24 @@ public class BoardController {
 			System.out.println("Insert 성공");
 			return "redirect:/board/list";
 		}else {
+			System.out.println("Insert 실패");
 			return "/board/writeForm";
 		}
 	}
 	
-	public String getBoard() {
-		return "";
+	@RequestMapping(value = "/read/{no}", method = {RequestMethod.GET, RequestMethod.POST})
+	public String getBoard(@PathVariable("no") int no, Model model) {
+		boardVO = boardService.cntBoard(no);
+		model.addAttribute("boardList", boardVO);
+		return "/board/read";
+	}
+	
+	@RequestMapping(value = "/modifyForm/{no}", method = {RequestMethod.GET, RequestMethod.POST})
+	public String updateForm(@PathVariable("no") int no, Model model) {
+		boardVO = boardService.getBoard(no);
+		//boardVO = boardService.getBoard((int)session.getAttribute("user.userNo"));
+		model.addAttribute("boardList", boardVO);
+		return "/board/modifyForm";
 	}
 	
 	

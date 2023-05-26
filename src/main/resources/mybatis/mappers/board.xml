@@ -20,13 +20,9 @@
 	
 	<select id="getBoard" parameterType="BoardVO" resultType="BoardVO">
 	<![CDATA[
-		select *
-		from users where id=#{id}
-		
-		SELECT b.boardNo, b.title, u.name, b.cnt, b.regdate, b.userNo, b.content
+		SELECT b.boardNo, b.title, u.name as userName, b.cnt, b.regdate, b.userNo, b.content
 		FROM board b , users u
 		where b.boardNo = #{boardNo} and b.userNo = u.no
-		
     ]]>
 	</select>
 	
@@ -38,6 +34,12 @@
 		WHERE u.no = #{userNo}
     ]]>
 	</insert>
+	
+	<update id="cntUpdate" parameterType="BoardVO">
+	<![CDATA[
+		update board set cnt = cnt + 1  where boardNo = #{boardNo}
+    ]]>
+	</update>
 	
 	<update id="boardUpdate" parameterType="BoardVO">
 	<![CDATA[

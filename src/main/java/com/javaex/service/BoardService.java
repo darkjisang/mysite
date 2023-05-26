@@ -23,6 +23,12 @@ public class BoardService {
 		return cnt;
 	}
 	
+	public BoardVO cntBoard(int no) {
+		System.out.println("BoardService.getBoard()");
+		boardDAO.cntUpdate(no);
+		return boardDAO.getBoard(no);
+	}
+	
 	public BoardVO getBoard(int no) {
 		System.out.println("BoardService.getBoard()");
 		return boardDAO.getBoard(no);

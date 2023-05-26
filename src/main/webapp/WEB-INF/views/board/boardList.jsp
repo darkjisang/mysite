@@ -65,10 +65,11 @@
 						</thead>
 
 						<c:forEach var="boardList" items="${boardList}">
+							<input type="hidden" name="boardNo" value="${boardList.boardNo}">
 							<tbody>
 								<tr>
 									<td>${boardList.boardNo}</td>
-									<td class="text-left"><a href="#">${boardList.title}</a></td>
+									<td class="text-left"><a href="./read/${boardList.boardNo}">${boardList.title}</a></td>
 									<td>${boardList.userName}</td>
 									<td>${boardList.cnt}</td>
 									<td>${boardList.regdate}</td>

@@ -89,7 +89,6 @@
 								<input type="radio" id="rdo-female" name="gender" value="female" checked="checked">
 							</c:otherwise>
 						</c:choose>
-						
 
 						</div>
 
@@ -99,7 +98,6 @@
 						</div>
 
 					</form>
-
 
 				</div>
 				<!-- //modifyForm -->
