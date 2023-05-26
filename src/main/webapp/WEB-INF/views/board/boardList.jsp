@@ -96,7 +96,16 @@
 
 						<div class="clear"></div>
 					</div>
-					<a id="btn_write" href="/mysite/board/writeForm">글쓰기</a>
+					
+					<c:choose>
+						<c:when test="${!empty user.id}">
+							<a id="btn_write" href="/mysite/board/writeForm">글쓰기</a>
+						</c:when>
+						<c:otherwise>
+							<a id="btn_write" href="/mysite/user/loginForm">글쓰기</a>
+						</c:otherwise>
+					</c:choose>
+					
 
 				</div>
 				<!-- //list -->

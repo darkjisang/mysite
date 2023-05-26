@@ -14,14 +14,18 @@ public class BoardDAO {
 	private SqlSession sqlsession;
 	
 	public List<BoardVO> boardList(){
-		System.out.println("BoardDAO.list()");
 		List<BoardVO> boardList = sqlsession.selectList("board.boardList");
 		return boardList;
 	}
 	
 	public int boardInsert(BoardVO vo) {
 		int cnt = sqlsession.insert("board.boardInsert", vo);
-		System.out.println("BoardDAO.boardInsert()");
 		return cnt;
+	}
+	
+	public BoardVO getBoard(int no) {
+		BoardVO vo = sqlsession.selectOne("board.getBoard", no);
+		System.out.println("BoardDAO.getBoard()");
+		return vo;
 	}
 }

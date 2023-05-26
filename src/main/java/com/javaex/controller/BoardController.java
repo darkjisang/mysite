@@ -36,9 +36,28 @@ public class BoardController {
 	public String boardInsert(@ModelAttribute BoardVO vo) {
 		if(boardService.boardInsert(vo) > 0) {
 			System.out.println("Insert 성공");
-			return "";
+			return "redirect:/board/list";
 		}else {
 			return "/board/writeForm";
 		}
 	}
+	
+	public String getBoard() {
+		return "";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -12,25 +12,30 @@
 	<!-- 쿼리문 작성 -->
 	<select id="boardList" parameterType="BoardVO" resultType="BoardVO">
 	<![CDATA[
-		select b.boardNo, b.title, u.name as userName, b.cnt, b.regdate, b.usernum as userNo, b.content
+		select b.boardNo, b.title, u.name as userName, b.cnt, b.regdate, b.userNo, b.content
 		FROM board b , users u
-		where b.usernum = u.no
+		where b.userNo = u.no
     ]]>
 	</select>
 	
-	<select id="getboard" parameterType="BoardVO" resultType="BoardVO">
+	<select id="getBoard" parameterType="BoardVO" resultType="BoardVO">
 	<![CDATA[
 		select *
 		from users where id=#{id}
+		
+		SELECT b.boardNo, b.title, u.name, b.cnt, b.regdate, b.userNo, b.content
+		FROM board b , users u
+		where b.boardNo = #{boardNo} and b.userNo = u.no
+		
     ]]>
 	</select>
 	
 	<insert id="boardInsert" parameterType="BoardVO">
 	<![CDATA[
-		INSERT INTO board (boardNo, title, content, regdate, userNum)
+		INSERT INTO board (boardNo, title, content, regdate, userNo)
 		SELECT board_seq.nextval, #{title}, #{content}, sysdate, u.no
 		FROM users u
-		WHERE u.no = #{userNum};
+		WHERE u.no = #{userNo}
     ]]>
 	</insert>
 	

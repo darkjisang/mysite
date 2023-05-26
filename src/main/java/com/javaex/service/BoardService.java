@@ -14,14 +14,17 @@ public class BoardService {
 	private BoardDAO boardDAO;
 	
 	public List<BoardVO> boardList(){
-		System.out.println("BoardService.list()");
 		List<BoardVO> boardList = boardDAO.boardList();
 		return boardList;
 	}
 	
 	public int boardInsert(BoardVO vo) {
-		System.out.println("BoardService.boardInsert()");
 		int cnt = boardDAO.boardInsert(vo);
 		return cnt;
+	}
+	
+	public BoardVO getBoard(int no) {
+		System.out.println("BoardService.getBoard()");
+		return boardDAO.getBoard(no);
 	}
 }
