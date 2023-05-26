@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+	<!-- <resultMap id="resultMapPersonVO" type="com.javaex.vo.PersonVO"> 
+		<result column="person_id" property="personId"/> 
+		<result column="name" property="name"/> 
+		<result column="hp" property="hp"/> 
+		<result column="company" property="company"/> 
+		</resultMap> -->
+
+	<!-- 쿼리문 작성 -->
+	<select id="boardList" parameterType="BoardVO" resultType="BoardVO">
+	<![CDATA[
+		select b.boardNo, b.title, u.name as userName, b.cnt, b.regdate, b.usernum as userNo, b.content
+		FROM board b , users u
+		where b.usernum = u.no
+    ]]>
+	</select>
+	
+	<select id="getboard" parameterType="BoardVO" resultType="BoardVO">
+	<![CDATA[
+		select *
+		from users where id=#{id}
+    ]]>
+	</select>
+	
+	<insert id="boardInsert" parameterType="BoardVO">
+	<![CDATA[
+		INSERT INTO board (boardNo, title, content, regdate, userNum)
+		SELECT board_seq.nextval, #{title}, #{content}, sysdate, u.no
+		FROM users u
+		WHERE u.no = #{userNum};
+    ]]>
+	</insert>
+	
+	<update id="boardUpdate" parameterType="BoardVO">
+	<![CDATA[
+		update users 
+		set password = #{password},
+		name = #{name},
+		gender = #{gender}
+		where id = #{id} and no = #{no}
+    ]]>
+	</update>
+	
+	<delete id="boardDelete" parameterType="BoardVO">
+	<![CDATA[
+		delete from register
+		where boardId = #{boardId} and pwd=#{pwd}
+    ]]>
+	</delete> 
+	
+	<!-- <select id="getlist" resultType="UserVO">
+	<![CDATA[
+		select boardId, name, pwd, content, regdate
+		 from register order by boardId
+    ]]>
+	</select>
+
+	<select id="getBoard" parameterType="UserVO" resultType="UserVO">
+	<![CDATA[
+		select boardId, name, pwd, content, regdate
+		 from register where boardId = #{boardId}
+    ]]>
+	</select>
+
+
+	-->
+
+</mapper>
