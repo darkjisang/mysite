@@ -10,14 +10,30 @@
 		</resultMap> -->
 
 	<!-- 쿼리문 작성 -->
+	<!-- 게시판 리스트 or  검색-->
 	<select id="boardList" parameterType="BoardVO" resultType="BoardVO">
 	<![CDATA[
-		select b.boardNo, b.title, u.name as userName, b.cnt, b.regdate, b.userNo, b.content
-		FROM board b , users u
-		where b.userNo = u.no
+	    SELECT b.boardNo, b.title, u.name as userName, b.cnt, b.regdate, b.userNo, b.content
+	    FROM board b JOIN users u ON b.userNo = u.no
+	]]>
+		<if test="title != null">
+			where b.title LIKE '%' || #{title} || '%'
+	    </if>
+	<![CDATA[
+	    ORDER BY b.boardNo desc
+	]]>
+	</select>
+	
+	<select id="serchBoard" parameterType="BoardVO" resultType="BoardVO">
+	<![CDATA[
+		SELECT b.boardNo, b.title, u.name as userName, b.cnt, b.regdate, b.userNo, b.content
+		FROM board b join users u 
+		on b.userNo = u.no
+		where b.title like '%' || #{title} || '%' 
     ]]>
 	</select>
 	
+	<!-- 게시판 클릭 -->
 	<select id="getBoard" parameterType="BoardVO" resultType="BoardVO">
 	<![CDATA[
 		SELECT b.boardNo, b.title, u.name as userName, b.cnt, b.regdate, b.userNo, b.content
@@ -43,20 +59,21 @@
 	
 	<update id="boardUpdate" parameterType="BoardVO">
 	<![CDATA[
-		update users 
-		set password = #{password},
-		name = #{name},
-		gender = #{gender}
-		where id = #{id} and no = #{no}
+		update board 
+		set title = #{title},
+		content = #{content}
+		where boardno = #{boardNo}
     ]]>
 	</update>
 	
 	<delete id="boardDelete" parameterType="BoardVO">
 	<![CDATA[
-		delete from register
-		where boardId = #{boardId} and pwd=#{pwd}
+		delete from board
+		where boardno = #{boardNo}
     ]]>
 	</delete> 
+	
+	
 	
 	<!-- <select id="getlist" resultType="UserVO">
 	<![CDATA[

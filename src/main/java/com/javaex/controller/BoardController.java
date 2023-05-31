@@ -22,9 +22,17 @@ public class BoardController {
 	private BoardVO boardVO;
 	
 	@RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
-	public String list(Model model) {
-		List<BoardVO> boardList = boardService.boardList();
+	public String list(Model model, @ModelAttribute BoardVO vo) {
+		List<BoardVO> boardList = boardService.boardList(vo);
 		model.addAttribute("boardList", boardList);
+		return "/board/boardList";
+	}
+	
+	@RequestMapping(value = "/serchBoard", method = {RequestMethod.GET, RequestMethod.POST})
+	public String serchBoard(Model model, @ModelAttribute BoardVO vo) {
+		List<BoardVO> boardList = boardService.serchBoard(vo);
+		model.addAttribute("boardList", boardList);
+	
 		return "/board/boardList";
 	}
 	
@@ -57,6 +65,26 @@ public class BoardController {
 		//boardVO = boardService.getBoard((int)session.getAttribute("user.userNo"));
 		model.addAttribute("boardList", boardVO);
 		return "/board/modifyForm";
+	}
+	
+	@RequestMapping(value = "/update", method = {RequestMethod.GET, RequestMethod.POST})
+	public String boardUpdate(@ModelAttribute BoardVO vo) {
+		System.out.println("boardUpdate");
+		System.out.println(vo);
+		if(boardService.boardUpdate(vo) > 0) {
+			System.out.println("Update 성공");
+			return "redirect:/board/list";
+		}else {
+			System.out.println("Update 실패");
+		}
+		return "/board/modifyForm";
+	}
+	
+	@RequestMapping(value = "/delete/{no}", method = {RequestMethod.GET, RequestMethod.POST})
+	public String boardDelete(@PathVariable("no") int no, Model model) {
+		model.addAttribute("boardList", boardVO);
+		boardService.boardDelete(no);
+		return "redirect:/board/list";
 	}
 	
 	

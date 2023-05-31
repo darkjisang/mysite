@@ -13,8 +13,13 @@ public class BoardService {
 	@Autowired
 	private BoardDAO boardDAO;
 	
-	public List<BoardVO> boardList(){
-		List<BoardVO> boardList = boardDAO.boardList();
+	public List<BoardVO> boardList(BoardVO vo){
+		List<BoardVO> boardList = boardDAO.boardList(vo);
+		return boardList;
+	}
+
+	public List<BoardVO> serchBoard(BoardVO vo){
+		List<BoardVO> boardList = boardDAO.serchBoard(vo);
 		return boardList;
 	}
 	
@@ -24,13 +29,21 @@ public class BoardService {
 	}
 	
 	public BoardVO cntBoard(int no) {
-		System.out.println("BoardService.getBoard()");
 		boardDAO.cntUpdate(no);
 		return boardDAO.getBoard(no);
 	}
 	
 	public BoardVO getBoard(int no) {
-		System.out.println("BoardService.getBoard()");
 		return boardDAO.getBoard(no);
+	}
+	
+	public int boardUpdate(BoardVO vo) {
+		System.out.println("BoardService.boardUpdate()");
+		int cnt = boardDAO.boardUpdate(vo);
+		return cnt;
+	}
+	
+	public void boardDelete(int no) {
+		boardDAO.boardDelete(no);
 	}
 }

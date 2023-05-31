@@ -10,6 +10,16 @@
 	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/board.css"
 	rel="stylesheet" type="text/css">
+	
+<script>
+	function validateForm() {
+		var title = document.forms["modifyForm"]["title"].value;
+		if (title === "") {
+			alert("제목을 입력해주세요.");
+			return false;
+		}
+	}
+</script>
 
 </head>
 
@@ -46,7 +56,7 @@
 
 			<div id="board">
 				<div id="modifyForm">
-					<form action="./modify" method="get">
+					<form name="modifyForm" action="/mysite/board/update" method="get" onsubmit="return validateForm()">
 						<input type="hidden" name="boardNo" value="${boardList.boardNo}">
 						<!-- 작성자 -->
 						<div class="form-group">
@@ -71,12 +81,10 @@
 
 						<!-- 내용 -->
 						<div class="form-group">
-							<textarea id="txt-content">
-								${boardList.content}
-							</textarea>
+							<textarea id="txt-content" name="content">${boardList.content}</textarea>
 						</div>
 
-						<a id="btn_cancel" href="./read/${boardList.boardNo}">취소</a>
+						<a id="btn_cancel" href="/mysite/board/read/${boardList.boardNo}">취소</a>
 						<button id="btn_modify" type="submit">수정</button>
 
 					</form>

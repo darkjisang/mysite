@@ -13,8 +13,13 @@ public class BoardDAO {
 	@Autowired
 	private SqlSession sqlsession;
 	
-	public List<BoardVO> boardList(){
-		List<BoardVO> boardList = sqlsession.selectList("board.boardList");
+	public List<BoardVO> boardList(BoardVO vo){
+		List<BoardVO> boardList = sqlsession.selectList("board.boardList", vo);
+		return boardList;
+	}
+	
+	public List<BoardVO> serchBoard(BoardVO vo){
+		List<BoardVO> boardList = sqlsession.selectList("board.serchBoard",vo);
 		return boardList;
 	}
 	
@@ -24,11 +29,21 @@ public class BoardDAO {
 	}
 	
 	public BoardVO getBoard(int no) {
-		System.out.println("BoardDAO.getBoard()");
 		return sqlsession.selectOne("board.getBoard", no);
 	}
 	
 	public void cntUpdate(int no) {
 		sqlsession.update("board.cntUpdate", no);
 	}
+	
+	public int boardUpdate(BoardVO vo) {
+		System.out.println("BoardDAO.boardUpdate()");
+		int cnt = sqlsession.update("board.boardUpdate", vo);
+		return cnt;
+	}
+	
+	public void boardDelete(int no) {
+		sqlsession.delete("board.boardDelete", no);
+	}
+	
 }

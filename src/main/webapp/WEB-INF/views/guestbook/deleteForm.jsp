@@ -92,7 +92,7 @@
 		<!-- //content  -->
 		<div class="clear"></div>
 
-		<div id="footer">Copyright ⓒ 2020 황일영. All right reserved</div>
+		<div id="footer">Copyright ⓒ 2023 박재우. All right reserved</div>
 		<!-- //footer -->
 
 	</div>

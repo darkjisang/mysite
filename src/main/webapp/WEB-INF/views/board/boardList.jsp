@@ -46,9 +46,9 @@
 
 			<div id="board">
 				<div id="list">
-					<form action="" method="get">
+					<form action="./list" method="get">
 						<div class="form-group text-right">
-							<input type="text">
+							<input type="text" name="title">
 							<button type="submit" id=btn_search>검색</button>
 						</div>
 					</form>
@@ -69,11 +69,18 @@
 							<tbody>
 								<tr>
 									<td>${boardList.boardNo}</td>
-									<td class="text-left"><a href="./read/${boardList.boardNo}">${boardList.title}</a></td>
+									<td class="text-left"><a
+										href="./read/${boardList.boardNo}">${boardList.title}</a></td>
 									<td>${boardList.userName}</td>
 									<td>${boardList.cnt}</td>
 									<td>${boardList.regdate}</td>
-									<td><a href="">[삭제]</a></td>
+
+									<c:choose>
+										<c:when test="${user.no == boardList.userNo}">
+											<td><a href="./delete/${boardList.boardNo}">[삭제]</a></td>
+										</c:when>
+									</c:choose>
+
 								</tr>
 							</tbody>
 						</c:forEach>
@@ -97,7 +104,7 @@
 
 						<div class="clear"></div>
 					</div>
-					
+
 					<c:choose>
 						<c:when test="${!empty user.id}">
 							<a id="btn_write" href="/mysite/board/writeForm">글쓰기</a>
@@ -106,7 +113,7 @@
 							<a id="btn_write" href="/mysite/user/loginForm">글쓰기</a>
 						</c:otherwise>
 					</c:choose>
-					
+
 
 				</div>
 				<!-- //list -->
