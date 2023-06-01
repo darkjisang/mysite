@@ -51,17 +51,6 @@
 	]]>
 	</select>
 	
-	<!--  
-	<select id="serchBoard" parameterType="BoardVO" resultType="BoardVO">
-	<![CDATA[
-		SELECT b.boardNo, b.title, u.name as userName, b.cnt, b.regdate, b.userNo, b.content
-		FROM board b join users u 
-		on b.userNo = u.no
-		where b.title like '%' || #{title} || '%' 
-    ]]>
-	</select>	
-	-->
-	
 	<!-- 게시판 클릭 -->
 	<select id="getBoard" parameterType="BoardVO" resultType="BoardVO">
 	<![CDATA[

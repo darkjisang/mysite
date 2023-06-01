@@ -38,7 +38,7 @@
 		<div id="aside">
 			<h2>게시판</h2>
 			<ul>
-				<li><a href="">일반게시판</a></li>
+				<li><a href="/mysite/board/list">일반게시판</a></li>
 				<li><a href="">댓글게시판</a></li>
 			</ul>
 		</div>
@@ -47,7 +47,7 @@
 		<div id="content">
 
 			<div id="content-head">
-				<h3>게시판</h3>
+				<h3>일반 게시판</h3>
 				<div id="location">
 					<ul>
 						<li>홈</li>
