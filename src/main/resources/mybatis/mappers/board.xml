@@ -23,7 +23,7 @@
                             content like '%'||#{keyword}||'%' 
                         </when>
                         <when test="type == 'W'.toString()">
-                            writer like '%'||#{keyword}||'%' 
+                            u.name like '%'||#{keyword}||'%' 
                         </when>
                     </choose>
                 </trim>
@@ -103,10 +103,11 @@
 	</delete>
 	
 	<select id="getTotal" resultType="int">
-		select COUNT(*) FROM board
+		select COUNT(*) 
+		FROM board b, users u
+		where b.userno = u.no
 		<if test="keyword != null">
-            where boardNo > 0 <include refid="criteria"></include>
+            <include refid="criteria"></include>
         </if> 
 	</select>
-	
 </mapper>

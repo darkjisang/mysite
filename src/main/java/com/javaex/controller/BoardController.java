@@ -30,6 +30,7 @@ public class BoardController {
 		int total = boardService.getTotal(cri);
 		PageMakerDTO pageMake = new PageMakerDTO(total, cri);
 		model.addAttribute("pageMake", pageMake);
+		System.out.println(pageMake);
 		return "/board/boardList";
 	}
 	

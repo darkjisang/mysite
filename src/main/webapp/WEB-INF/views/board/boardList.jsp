@@ -69,8 +69,6 @@
 				                <option value="C" <c:out value="${pageMake.cri.type eq 'C'?'selected':'' }"/>>내용</option>
 				                <option value="W" <c:out value="${pageMake.cri.type eq 'W'?'selected':'' }"/>>작성자</option>
 				                <option value="TC" <c:out value="${pageMake.cri.type eq 'TC'?'selected':'' }"/>>제목 + 내용</option>
-				                <option value="TW" <c:out value="${pageMake.cri.type eq 'TW'?'selected':'' }"/>>제목 + 작성자</option>
-				                <option value="TCW" <c:out value="${pageMake.cri.type eq 'TCW'?'selected':'' }"/>>제목 + 내용 + 작성자</option>
 				            </select>
 							<input type="text" name="keyword" value="${pageMake.cri.keyword }">
 							<%-- <input type="hidden" name="type" value="${pageMake.cri.type }"> --%>
@@ -132,8 +130,8 @@
 					<form action="list" id="moveForm" method="get">
 						<input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
 						<input type="hidden" name="amount" value="${pageMake.cri.amount }">
-						<input type="hidden" name="keyword" value="${cri.keyword }">
-						<input type="hidden" name="type" value="${cri.type }">
+						<input type="hidden" name="keyword" value="${pageMake.cri.keyword }">
+						<input type="hidden" name="type" value="${pageMake.cri.type }">
 					</form>
 
 					<c:choose>
