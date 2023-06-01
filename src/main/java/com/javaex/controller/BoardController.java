@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.javaex.dto.PageMakerDTO;
 import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVO;
+import com.javaex.vo.Criteria;
 
 @Controller
 @RequestMapping(value = "/board", method = {RequestMethod.GET, RequestMethod.POST})
@@ -22,9 +24,12 @@ public class BoardController {
 	private BoardVO boardVO;
 	
 	@RequestMapping(value = "/list", method = {RequestMethod.GET, RequestMethod.POST})
-	public String list(Model model, @ModelAttribute BoardVO vo) {
-		List<BoardVO> boardList = boardService.boardList(vo);
+	public String list(Model model, Criteria cri) {
+		List<BoardVO> boardList = boardService.boardList(cri);
 		model.addAttribute("boardList", boardList);
+		int total = boardService.getTotal(cri);
+		PageMakerDTO pageMake = new PageMakerDTO(total, cri);
+		model.addAttribute("pageMake", pageMake);
 		return "/board/boardList";
 	}
 	
@@ -69,8 +74,6 @@ public class BoardController {
 	
 	@RequestMapping(value = "/update", method = {RequestMethod.GET, RequestMethod.POST})
 	public String boardUpdate(@ModelAttribute BoardVO vo) {
-		System.out.println("boardUpdate");
-		System.out.println(vo);
 		if(boardService.boardUpdate(vo) > 0) {
 			System.out.println("Update 성공");
 			return "redirect:/board/list";

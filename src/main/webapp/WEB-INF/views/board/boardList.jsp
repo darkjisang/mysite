@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,20 @@
 	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/board.css"
 	rel="stylesheet" type="text/css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+
+<script>
+   $(document).ready(function() {
+
+      $("#paging .pageInfo a").on("click", function(e) {
+         e.preventDefault();
+         var pageNum = $(this).attr("href");
+         $("#moveForm input[name='pageNum']").val(pageNum);
+         $("#moveForm").submit();
+      });
+
+   });
+</script>
 
 </head>
 <body>
@@ -48,7 +63,17 @@
 				<div id="list">
 					<form action="./list" method="get">
 						<div class="form-group text-right">
-							<input type="text" name="title">
+							<select name="type">
+				                <option value="" <c:out value="${pageMake.cri.type == null?'selected':'' }"/>>--</option>
+				                <option value="T" <c:out value="${pageMake.cri.type eq 'T'?'selected':'' }"/>>제목</option>
+				                <option value="C" <c:out value="${pageMake.cri.type eq 'C'?'selected':'' }"/>>내용</option>
+				                <option value="W" <c:out value="${pageMake.cri.type eq 'W'?'selected':'' }"/>>작성자</option>
+				                <option value="TC" <c:out value="${pageMake.cri.type eq 'TC'?'selected':'' }"/>>제목 + 내용</option>
+				                <option value="TW" <c:out value="${pageMake.cri.type eq 'TW'?'selected':'' }"/>>제목 + 작성자</option>
+				                <option value="TCW" <c:out value="${pageMake.cri.type eq 'TCW'?'selected':'' }"/>>제목 + 내용 + 작성자</option>
+				            </select>
+							<input type="text" name="keyword" value="${pageMake.cri.keyword }">
+							<%-- <input type="hidden" name="type" value="${pageMake.cri.type }"> --%>
 							<button type="submit" id=btn_search>검색</button>
 						</div>
 					</form>
@@ -69,7 +94,7 @@
 							<tbody>
 								<tr>
 									<td>${boardList.boardNo}</td>
-									<td class="text-left"><a
+									<td class="text-center"><a
 										href="./read/${boardList.boardNo}">${boardList.title}</a></td>
 									<td>${boardList.userName}</td>
 									<td>${boardList.cnt}</td>
@@ -87,23 +112,29 @@
 					</table>
 
 					<div id="paging">
-						<ul>
-							<li><a href="">◀</a></li>
-							<li><a href="">1</a></li>
-							<li><a href="">2</a></li>
-							<li><a href="">3</a></li>
-							<li><a href="">4</a></li>
-							<li class="active"><a href="">5</a></li>
-							<li><a href="">6</a></li>
-							<li><a href="">7</a></li>
-							<li><a href="">8</a></li>
-							<li><a href="">9</a></li>
-							<li><a href="">10</a></li>
-							<li><a href="">▶</a></li>
+						<ul id="pageInfo" class="pageInfo">
+							<!-- 이전페이지 버튼 -->
+			                <c:if test="${pageMake.prev}">
+			                    <li class="pageInfo_btn previous"><a href="${pageMake.startPage-1}">◀</a></li>
+			                </c:if>
+							<!-- 각 번호 페이지 버튼 -->
+							<c:forEach var="num" begin="${pageMake.startPage }" end="${pageMake.endPage }">
+								<li class="pageInfo_btn ${pageMake.cri.pageNum == num ? "active":"" }"><a href="${num }">${num }</a></li>
+							</c:forEach>
+							<!-- 다음페이지 버튼 -->
+			                <c:if test="${pageMake.next}">
+			                    <li class="pageInfo_btn next"><a href="${pageMake.endPage + 1 }">▶</a></li>
+			                </c:if>
 						</ul>
 
 						<div class="clear"></div>
 					</div>
+					<form action="list" id="moveForm" method="get">
+						<input type="hidden" name="pageNum" value="${pageMake.cri.pageNum }">
+						<input type="hidden" name="amount" value="${pageMake.cri.amount }">
+						<input type="hidden" name="keyword" value="${cri.keyword }">
+						<input type="hidden" name="type" value="${cri.type }">
+					</form>
 
 					<c:choose>
 						<c:when test="${!empty user.id}">

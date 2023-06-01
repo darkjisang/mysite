@@ -7,14 +7,15 @@ import org.springframework.stereotype.Service;
 
 import com.javaex.dao.BoardDAO;
 import com.javaex.vo.BoardVO;
+import com.javaex.vo.Criteria;
 
 @Service
 public class BoardService {
 	@Autowired
 	private BoardDAO boardDAO;
 	
-	public List<BoardVO> boardList(BoardVO vo){
-		List<BoardVO> boardList = boardDAO.boardList(vo);
+	public List<BoardVO> boardList(Criteria cri){
+		List<BoardVO> boardList = boardDAO.boardList(cri);
 		return boardList;
 	}
 
@@ -38,12 +39,15 @@ public class BoardService {
 	}
 	
 	public int boardUpdate(BoardVO vo) {
-		System.out.println("BoardService.boardUpdate()");
 		int cnt = boardDAO.boardUpdate(vo);
 		return cnt;
 	}
 	
 	public void boardDelete(int no) {
 		boardDAO.boardDelete(no);
+	}
+	
+	public int getTotal(Criteria cri) {
+		return boardDAO.getTotal(cri);
 	}
 }
