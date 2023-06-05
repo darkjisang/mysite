@@ -25,8 +25,15 @@ public class UserService {
 	}
 	
 	public int userUpdate(UserVO vo) {
-		int cnt = userDAO.userUpdate(vo);
-		System.out.println("UserService.userUpdate()");
-		return cnt;
+		return userDAO.userUpdate(vo);
+	}
+	
+	public boolean idCheck(String id) {
+		boolean bl = false;
+		if(userDAO.getUser(id) == null) {
+			bl = true;
+		}
+		return bl;
+		
 	}
 }

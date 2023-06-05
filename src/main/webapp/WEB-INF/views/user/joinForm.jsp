@@ -6,11 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title>JoinForm</title>
-<link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet"
-	type="text/css">
-<link href="${pageContext.request.contextPath}/assets/css/user.css" rel="stylesheet"
-	type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/mysite.css"
+	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/user.css"
+	rel="stylesheet" type="text/css">
 </head>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
 
 <body>
 	<div id="wrap">
@@ -18,7 +20,7 @@
 		<!-- //header -->
 		<c:import url="/WEB-INF/views/main/header.jsp"></c:import>
 		<!-- //nav -->
-		
+
 		<div id="aside">
 			<h2>회원</h2>
 			<ul>
@@ -43,35 +45,39 @@
 			<!-- //content-head -->
 			<div id="user">
 				<div id="joinForm">
-					<form action="/mysite/user/join" method="get">
+					<form action="/mysite/user/join" method="get" name="joinForm"
+						onsubmit="return validateForm()">
 						<!-- 아이디 -->
 						<div class="form-group">
-							<label class="form-text" for="input-uid">아이디</label> 
-							<input type="text" id="input-uid" name="id" value="" placeholder="아이디를 입력하세요">
-							<button type="button" id="">중복체크</button>
+							<label class="form-text" for="input-uid">아이디</label>
+							<input type="text" id="input-uid" name="id" value="" 
+							placeholder="아이디를 입력하세요" class="userJoin" required>
+							<button type="button" id="checkBtn">중복체크</button>
+							<p id="idCheckMsg" align="center" />
 						</div>
 						<!-- 비밀번호 -->
 						<div class="form-group">
 							<label class="form-text" for="input-pass">패스워드</label> 
-							<input type="password" id="input-pass" name="password" value="" placeholder="비밀번호를 입력하세요">
+							<input type="password" id="input-pass" name="password" value=""
+								placeholder="비밀번호를 입력하세요" class="userJoin" required>
 						</div>
 						<!-- 이름 -->
 						<div class="form-group">
 							<label class="form-text" for="input-name">이름</label> 
-							<input type="text" id="input-name" name="name" value="" placeholder="이름을 입력하세요">
+							<input type="text" id="input-name" name="name" value=""
+								placeholder="이름을 입력하세요" class="userJoin" required>
 						</div>
 						<!-- 성별 -->
 						<div class="form-group">
-							<span class="form-text">성별</span> 
-							<label for="rdo-male">남</label>
-							<input type="radio" id="rdo-male" name="gender" value="male"> 
+							<span class="form-text">성별</span> <label for="rdo-male">남</label>
+							<input type="radio" id="rdo-male" name="gender" value="male" class="userJoin"> 
 							<label for="rdo-female">여</label> 
-							<input type="radio" id="rdo-female" name="gender" value="female">
+							<input type="radio" id="rdo-female" name="gender" value="female" class="userJoin">
 						</div>
 						<!-- 약관동의 -->
 						<div class="form-group">
 							<span class="form-text">약관동의</span> 
-							<input type="checkbox" id="chk-agree" value="" name="">
+							<input type="checkbox" id="chk-agree" value="" name=""> 
 							<label for="chk-agree">서비스 약관에 동의합니다.</label>
 						</div>
 						<!-- 버튼영역 -->
@@ -92,4 +98,51 @@
 	</div>
 	<!-- //wrap -->
 </body>
+<script type="text/javascript">
+	$("#checkBtn").on("click", function() {
+		var check = $("#input-uid").val();
+		if (check === "") {
+			alert("아이디를 입력하시오.");
+			return false;
+		}
+		//id 추출
+		var id = $("[name = id]").val();
+
+		//통신l
+		$.ajax({
+			url : "${pageContext.request.contextPath}/user/idCheck",
+			type : "post",
+			/* contentType : "application/json", */
+			data : {id : id},
+			dataType : "json",
+			success : function(jsonResult) {
+				console.log(jsonResult);
+				if (jsonResult.result == 'success') {
+					if (jsonResult.data == true) {
+						$("#idCheckMsg").css("color", "blue").html(id + " 사용가능");
+					} else {
+						$("#idCheckMsg").css("color", "red").html(id + " 사용불가");
+					}
+				}
+						/* if (result !== null) {
+							//$("#idCheckMsg").css(" 사용불가", "red");
+							//$("#idCheckMsg").html(id + " 사용불가");
+							$("#idCheckMsg").css("color", "red").html(id + " 사용불가");
+						}  */
+						/*성공시 처리해야될 코드 작성*/
+					},
+					error : function(XHR, status, error) {
+						//$("#idCheckMsg").css("color", "blue").html(id + " 사용가능");
+					}
+				});
+			});
+
+	function validateForm() {
+		var check = $(".userJoin").val();
+		if (check === "") {
+			alert("입력 확인.");
+			return false;
+		}
+	}
+</script>
 </html>

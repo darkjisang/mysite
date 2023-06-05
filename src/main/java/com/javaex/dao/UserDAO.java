@@ -10,23 +10,26 @@ import com.javaex.vo.UserVO;
 public class UserDAO {
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	public int UserInsert(UserVO vo) {
 		int cnt = sqlSession.insert("user.UserInsert", vo);
 		return cnt;
 	}
-	
+
 	public UserVO loginUser(UserVO vo) {
 		return sqlSession.selectOne("user.loginUser", vo);
 	}
-	
+
 	public UserVO getUser(UserVO vo) {
+		System.out.println("UserDAO" + vo);
 		return sqlSession.selectOne("user.getUser", vo);
 	}
-	
+
+	public UserVO getUser(String id) { 
+		return sqlSession.selectOne("user.idCheck", id); 
+	}
+
 	public int userUpdate(UserVO vo) {
-		int cnt = sqlSession.update("user.userUpdate", vo);
-		System.out.println("UserDAO.userUpdate()");
-		return cnt;
+		return sqlSession.update("user.userUpdate", vo);
 	}
 }

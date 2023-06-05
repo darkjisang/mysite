@@ -17,7 +17,19 @@
 		var name = document.forms["addList"]["name"].value.trim();
 		var pwd = document.forms["addList"]["pwd"].value.trim();
 		var content = document.forms["addList"]["content"].value.trim();
-		return name !== "" ? pwd !== "" ? content !== "" : (alert("내용을 입력해주세요."), false) : (alert("패스워드를 입력해주세요."), false);
+		if (name === "") {
+			alert("이름을 입력해주세요.");
+			return false;
+		}
+		if (pwd === "") {
+			alert("패스워드를 입력해주세요.");
+			return false;
+		}
+		if (content === "") {
+			alert("내용을 입력해주세요.");
+			return false;
+		}
+		return true;
 	}
 </script>
 

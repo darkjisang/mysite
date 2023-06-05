@@ -29,6 +29,13 @@
     ]]>
 	</select>
 	
+	<select id="idCheck" parameterType="String" resultType="UserVO">
+	<![CDATA[
+		select *
+		from users where id=#{id}
+    ]]>
+	</select>
+	
 	<update id="userUpdate" parameterType="UserVO">
 	<![CDATA[
 		update users 

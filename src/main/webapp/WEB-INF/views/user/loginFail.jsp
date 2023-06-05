@@ -7,7 +7,7 @@
 <title>Login Fail</title>
 <script>
 	window.onload = function() {
-		alert("패스워드 확인요망!!!"); // 페이지 로딩 후 경고창 표시
+		alert("아이디 / 패스워드 확인요망!!!"); // 페이지 로딩 후 경고창 표시
 		window.location.href = "/mysite/user/loginForm/";
 	};
 </script>

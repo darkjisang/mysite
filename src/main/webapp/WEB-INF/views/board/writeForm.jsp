@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -10,6 +10,15 @@
 	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/board.css"
 	rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
+<script type="text/javascript">	
+function validateForm() {
+	var check = $(".userJoin").val();
+	if (check === "" && (alert("내용 확인."), true)) {
+		return false;
+	}
+}
+</script>
 
 </head>
 <body>
@@ -46,24 +55,24 @@
 
 			<div id="board">
 				<div id="writeForm">
-					<form action="./boardInsert" method="get">
+					<form action="./boardInsert" method="get" name="writeForm" onsubmit="return validateForm()">
 						<!-- 제목 -->
 						<div class="form-group">
-							<label class="form-text" for="txt-title">제목</label>
-							<input type="text" id="txt-title" name="title" value="" placeholder="제목을 입력해 주세요">
+							<label class="form-text" for="txt-title">제목</label> <input
+								type="text" id="txt-title" name="title" value="" class="userJoin"
+								placeholder="제목을 입력해 주세요">
 						</div>
-					
+
 						<!-- 내용 -->
 						<div class="form-group">
-							<textarea id="txt-content" name="content"></textarea>
+							<textarea id="txt-content" name="content" class="userJoin"></textarea>
 						</div>
-						<input type="hidden" name="userNo" value="${user.no}">
-						
-						<a id="btn_cancel" href="./list">취소</a>
-						<button id="btn_add" type="submit" >등록</button>
-						
+						<input type="hidden" name="userNo" value="${user.no}"> <a
+							id="btn_cancel" href="./list">취소</a>
+						<button id="btn_add" type="submit">등록</button>
+
 					</form>
-	                <!-- //form -->
+					<!-- //form -->
 				</div>
 				<!-- //writeForm -->
 			</div>
@@ -72,9 +81,7 @@
 		<!-- //content  -->
 		<div class="clear"></div>
 
-		<div id="footer">
-			Copyright ⓒ 2023 박재우. All right reserved
-		</div>
+		<div id="footer">Copyright ⓒ 2023 박재우. All right reserved</div>
 		<!-- //footer -->
 	</div>
 	<!-- //wrap -->
