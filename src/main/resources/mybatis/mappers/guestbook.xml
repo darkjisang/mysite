@@ -5,17 +5,35 @@
 	<select id="getlist" resultType="GuestBookVO">
 	<![CDATA[
 		select boardId, name, pwd, content, regdate
-		 from register order by boardId
+		 from register order by boardId DESC
     ]]>
 	</select>
 
-	<select id="getBoard" parameterType="GuestBookVO"
+	<select id="getBoard" parameterType="int"
+		resultType="GuestBookVO">
+	<![CDATA[
+		select boardId, name, pwd, content, regdate
+		 from register where boardId = #{value}
+    ]]>
+	</select>
+	
+	<select id="getInsert" parameterType="int"
 		resultType="GuestBookVO">
 	<![CDATA[
 		select boardId, name, pwd, content, regdate
 		 from register where boardId = #{boardId}
     ]]>
 	</select>
+	
+	<insert id="ajaxInsert" parameterType="GuestBookVO">
+		<selectKey keyProperty="boardId" resultType="int" order="BEFORE">
+			select register_seq.nextval from dual
+		</selectKey>
+		<![CDATA[
+			insert into register(boardId, name, pwd, content, regdate) 
+			values (#{boardId}, #{name}, #{pwd}, #{content}, sysdate)
+	    ]]>
+	</insert>
 
 	<insert id="insert" parameterType="GuestBookVO">
 	<![CDATA[

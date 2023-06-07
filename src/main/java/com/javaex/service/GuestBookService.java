@@ -34,4 +34,10 @@ public class GuestBookService {
 		int cnt = guestBookDAO.boardDelete(vo);
 		return cnt;
 	}
+	
+	//ajax 방명록 
+	public GuestBookVO ajaxInsert(GuestBookVO vo) {
+		int cnt = guestBookDAO.ajaxInsert(vo); 
+		return guestBookDAO.getBoard(cnt);
+	}
 }

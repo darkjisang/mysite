@@ -17,7 +17,7 @@ public class GuestBookDAO {
 		List<GuestBookVO> list = sqlSession.selectList("guestbook.getlist");
 		return list;
 	}
-	
+
 	public GuestBookVO getBoard(int no) {
 		GuestBookVO vo = sqlSession.selectOne("guestbook.getBoard", no);
 		return vo;
@@ -30,6 +30,13 @@ public class GuestBookDAO {
 	
 	public int boardDelete(GuestBookVO vo) {
 		int cnt = sqlSession.delete("guestbook.delete", vo);
+		return cnt;
+	}
+	
+	//ajax 방명록 
+	public int ajaxInsert(GuestBookVO vo) {
+		sqlSession.insert("guestbook.ajaxInsert", vo);
+		int cnt = vo.getBoardId();
 		return cnt;
 	}
 }

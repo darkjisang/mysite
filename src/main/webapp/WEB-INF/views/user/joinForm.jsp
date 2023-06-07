@@ -10,9 +10,9 @@
 	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/user.css"
 	rel="stylesheet" type="text/css">
-</head>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
+</head>
 
 <body>
 	<div id="wrap">
@@ -108,7 +108,7 @@
 		//id 추출
 		var id = $("[name = id]").val();
 
-		//통신l
+		//통신
 		$.ajax({
 			url : "${pageContext.request.contextPath}/user/idCheck",
 			type : "post",
