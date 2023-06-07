@@ -250,7 +250,8 @@
 		//모달창 호출
 		$("#myModal").modal("show");
 	});
-
+	
+	//방명록 저장버튼
 	$("#btnSubmit").on("click", function() {
 						//이벤트확인
 						console.log("Btn click");
