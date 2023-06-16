@@ -21,7 +21,6 @@ public class UserDAO {
 	}
 
 	public UserVO getUser(UserVO vo) {
-		System.out.println("UserDAO" + vo);
 		return sqlSession.selectOne("user.getUser", vo);
 	}
 

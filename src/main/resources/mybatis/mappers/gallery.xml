@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="gallery">
+	<select id="getlist" resultType="GalleryVO">
+	<![CDATA[
+		select g.No as fileNo, g.userNo, u.name as userName, g.content, g.filePath, g.orgName, g.saveName, g.fileSize
+		FROM gallery G , users u
+		where g.userNo = u.no
+		order by g.No
+    ]]>
+	</select>
+
+ 	<select id="getGallery" parameterType="int" resultType="GalleryVO">
+		select g.No, u.No as userNo, u.name, g.content, g.filePath, g.orgName, g.saveName, g.fileSize
+		FROM gallery G , users u
+		where g.userNo = u.no and g.no = #{value}
+	</select>
+
+	<insert id="insert" parameterType="GalleryVO">
+	<![CDATA[
+	
+		INSERT INTO gallery (No, userNo, content, filePath, orgName, saveName, fileSize)
+		SELECT gallery_seq.nextval, #{userNo}, #{content}, #{filePath}, #{orgName}, #{saveName}, #{fileSize}
+		FROM users u
+		WHERE u.no = #{userNo}
+    ]]>
+	</insert>
+
+	<delete id="delete" parameterType="GalleryVO">
+	<![CDATA[
+		delete from register
+		where boardId = #{boardId} and pwd=#{pwd}
+    ]]>
+	</delete>
+
+</mapper>

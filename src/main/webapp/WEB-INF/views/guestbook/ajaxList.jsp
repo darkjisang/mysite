@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.List"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -7,20 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>방명록</title>
-<link href="${pageContext.request.contextPath}/assets/css/mysite.css"
-	rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/assets/css/guestbook.css"
-	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/mysite.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 <!-- 부트스트랩 -->
-<link
-	href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.css"
-	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css">
 <!-- jquery -->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
 <!-- 부트스트랩js -->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
@@ -72,12 +65,10 @@
 							<td><input id="input-uname" type="text" name="name" required></td>
 							<th><label class="form-text" for="input-pass">패스워드</label>
 							</td>
-							<td><input id="input-pass" type="password" name="pwd"
-								required></td>
+							<td><input id="input-pass" type="password" name="pwd" required></td>
 						</tr>
 						<tr>
-							<td colspan="4"><textarea name="content" id="input-content"
-									cols="72" rows="5" required></textarea></td>
+							<td colspan="4"><textarea name="content" id="input-content" cols="72" rows="5" required></textarea></td>
 						</tr>
 						<tr class="button-area">
 							<td colspan="4"><button type="button" id="btnSubmit">등록</button></td>
@@ -106,11 +97,8 @@
 								<td>${list.boardId}</td>
 								<td>${list.name}</td>
 								<td>${list.regDate}</td>
-								<td><button type="button"
-										class="btn btn-primary btn-sm btnModal"
-										data-no="${list.boardId}" data-name="${list.name}"
-										data-content="${list.content}" data-pwd="${list.pwd}">
-										Delete</button></td>
+								<td><button type="button" class="btn btn-primary btn-sm btnModal" data-no="${list.boardId}" data-name="${list.name}"
+										data-content="${list.content}" data-pwd="${list.pwd}">Delete</button></td>
 							</tr>
 							<tr>
 								<td colspan=4 class="text-left">${list.content}</td>
@@ -135,13 +123,11 @@
 	<!---------------------------------------- 삭제폼 모달창 ---------------------------------------------->
 
 	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">Delete Modal</h4>
@@ -177,7 +163,6 @@
 	//모달창 삭제버튼
 	$("#btnDel").on("click", function() {
 						//데이터 모으기
-
 						$([ "name='name'" ]).val("");
 						$([ "name='content'" ]).val("");
 
@@ -193,46 +178,41 @@
 						};
 
 						//통신
-						$.ajax({
-									url : "${pageContext.request.contextPath}/api/guestbook/boardRemove",
+						$.ajax({url : "${pageContext.request.contextPath}/api/guestbook/boardRemove",
 									type : "post",
 									/* contentType : "application/json", */
 									data : guestVO,
-
 									dataType : "json",
 									success : function(jsonResult) {
 										console.log(jsonResult);
 										if (jsonResult.result == "success") {
-											if(jsonResult.data > 0){
+											if (jsonResult.data > 0) {
 												//모달창 닫기
 												$("#myModal").modal("hide");
 												$("#t-" + boardId).remove();
 												Swal.fire({
-													  icon: 'success',
-													  title: '삭제 되었습니다.',
-													  showConfirmButton: false,
-													  timer: 1500
-													})
-											}else{
+													icon : 'success',
+													title : '삭제 되었습니다.',
+													showConfirmButton : false,
+													timer : 1500
+												})
+											} else {
 												Swal.fire({
-													  icon: 'error',
-													  title: '비밀번호 확인',
-													  text: '비밀번호를 확인해주세요.',
-													  //footer: '<a href="">Why do I have this issue?</a>'
-													});
+													icon : 'error',
+													title : '비밀번호 확인',
+													text : '비밀번호를 확인해주세요.',
+												//footer: '<a href="">Why do I have this issue?</a>'
+												});
 											}
-
 										} else {
 											//오류처리
 										}
-
 										/*성공시 처리해야될 코드 작성*/
 									},
 									error : function(XHR, status, error) {
 										//$("#idCheckMsg").css("color", "blue").html(id + " 사용가능");
 									}
 								});
-
 					});
 
 	//리스트 삭제버튼
@@ -250,49 +230,47 @@
 		//모달창 호출
 		$("#myModal").modal("show");
 	});
-	
+
 	//방명록 저장버튼
 	$("#btnSubmit").on("click", function() {
-						//이벤트확인
-						console.log("Btn click");
-						//데이터 수집
-						var name = $("#input-uname").val();
-						var pwd = $("#input-pass").val();
-						var content = $("#input-content").val();
-						var guestVO = {
-							name : name,
-							pwd : pwd,
-							content : content
-						};
+		//이벤트확인
+		console.log("Btn click");
+		//데이터 수집
+		var name = $("#input-uname").val();
+		var pwd = $("#input-pass").val();
+		var content = $("#input-content").val();
+		var guestVO = {
+			name : name,
+			pwd : pwd,
+			content : content
+		};
 
-						//통신
-						$.ajax({
-							url : "${pageContext.request.contextPath}/api/guestbook/boardInsert",
-							type : "post",
-							/* contentType : "application/json", */
-							data : guestVO,
+		//통신
+		$.ajax({url : "${pageContext.request.contextPath}/api/guestbook/boardInsert",
+			type : "post",
+			/* contentType : "application/json", */
+			data : guestVO,
+			dataType : "json",
+			success : function(jsonResult) {
+				
+				console.log(jsonResult);
+				if (jsonResult.result == "success") {
+					render(jsonResult.data); //리스트 추가
+					//등록폼 비우기
+					$([ "name='name'" ]).val("");
+					$([ "name='pwd'" ]).val("");
+					$([ "name='content'" ]).val("");
+				} else {
+			//오류처리
+			}
+		/*성공시 처리해야될 코드 작성*/
+		},
+		error : function(XHR, status, error) {
+			//$("#idCheckMsg").css("color", "blue").html(id + " 사용가능");
+		}
+	});
 
-							dataType : "json",
-							success : function(jsonResult) {
-								console.log(jsonResult);
-								if (jsonResult.result == "success") {
-									render(jsonResult.data); //리스트 추가
-									//등록폼 비우기
-									$([ "name='name'" ]).val("");
-									$([ "name='pwd'" ]).val("");
-									$([ "name='content'" ]).val("");
-								} else {
-									//오류처리
-								}
-
-										/*성공시 처리해야될 코드 작성*/
-								},
-								error : function(XHR, status, error) {
-									//$("#idCheckMsg").css("color", "blue").html(id + " 사용가능");
-								}
-							});
-
-					});
+});
 
 	//방명록 그리기
 	function render(guestbookVO) {
